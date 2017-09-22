@@ -14,11 +14,13 @@ class sssd::install (
     ensure => 'latest',
   }
 
-  package { 'sssd-client':
-    ensure => 'latest',
+  if $osfamily == RedHat {
+    package { 'sssd-client':
+      ensure => 'latest',
+    }
   }
 
-  if versioncmp($::operatingsystemrelease, '7.0') >= 0 {
+  if versioncmp($::operatingsystemrelease, '7.0') >= 0 or $osfamily == Debian {
     package { 'oddjob-mkhomedir':
       ensure => 'installed',
     }

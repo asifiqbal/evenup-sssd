@@ -25,6 +25,14 @@ class sssd::config {
     content => template('sssd/sssd.conf.erb'),
   }
 
+  file { '/etc/oddjobd.conf.d/oddjobd-mkhomedir.conf':
+    ensure  => 'file',
+    owner   => 'root',
+    group   => 'root',
+    mode    => '0644',
+    content => template('sssd/oddjobd-mkhomedir.conf.erb'),
+  }
+
   file { '/etc/pam.d/password-auth':
     ensure => file,
     owner  => 'root',

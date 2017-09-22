@@ -24,7 +24,7 @@ offline_credentials_expiration = 0
 [domain/<%= scope.lookupvar('sssd::domain') %>]
 debug_level = <%= scope.lookupvar('sssd::debug_level') %>
 id_provider = <%= scope.lookupvar('sssd::provider') %>
-auth_provider = <%= scope.lookupvar('sssd::provider') %>
+auth_provider = <%= scope.lookupvar('sssd::auth_provider') %>
 chpass_provider = <%= scope.lookupvar('sssd::provider') %>
 access_provider = <%= scope.lookupvar('sssd::provider') %>
 cache_credentials = true
@@ -35,8 +35,14 @@ ldap_id_use_start_tls = true
 ldap_search_base = <%= scope.lookupvar('sssd::ldap_base') %>
 ldap_uri = <%= scope.lookupvar('sssd::ldap_uri') %>
 ldap_access_filter = <%= scope.lookupvar('sssd::ldap_access_filter') %>
-ldap_group_member = <%= scope.lookupvar('sssd::ldap_group_member') %>
-ldap_group_object_class = posixGroup
+<%# need a condition if the key exist for bind account -%>
+<%#ldap_group_member = <%= scope.lookupvar('sssd::ldap_group_member') -%>
+<%# need a condition if the key exist for bind account -%>
+ldap_user_uid_number = <%= scope.lookupvar('sssd::ldap_user_uid_number') %>
+ldap_user_gid_number = <%= scope.lookupvar('sssd::ldap_user_gid_number') %>
+ldap_group_gid_number = <%= scope.lookupvar('sssd::ldap_group_gid_number') %>
+ldap_group_object_class = <%= scope.lookupvar('sssd::ldap_group_object_class') %>
+ldap_user_object_class = <%= scope.lookupvar('sssd::ldap_user_object_class') %>
 ldap_group_name = cn
 ldap_network_timeout = 3
 ldap_tls_reqcert = <%= scope.lookupvar('sssd::ldap_tls_reqcert') %>
@@ -45,6 +51,12 @@ ldap_chpass_update_last_change = true
 ldap_pwd_policy = <%= scope.lookupvar('sssd::ldap_pwd_policy') %>
 ldap_account_expire_policy = shadow
 ldap_access_order = expire
+<%# need a condition for bind account -%>
+ldap_default_authtok_type = <%= scope.lookupvar('sssd::ldap_default_authtok_type') %>
+ldap_default_bind_dn = <%= scope.lookupvar('sssd::ldap_default_bind_dn') %>
+ldap_default_authtok = <%= scope.lookupvar('sssd::ldap_default_authtok') %>
+default_shell = <%= scope.lookupvar('sssd::default_shell') %>
+fallback_homedir = <%= scope.lookupvar('sssd::fallback_homedir') %>
 <% elsif scope.lookupvar('sssd::provider') == 'ipa' %>
 krb5_store_password_if_offline = true
 ipa_domain = <%= scope.lookupvar('sssd::domain') %>
@@ -54,6 +66,13 @@ ipa_server = <%= scope.lookupvar('sssd::ipa_server') %>
 ldap_tls_cacert = /etc/ipa/ca.crt
 ipa_server_mode = <%= scope.lookupvar('sssd::ipa_server_mode') ? 'true':'false' %>
 <% end -%>
+<% if scope.lookupvar('sssd::auth_provider') == 'krb5' -%>
+krb5_server = <%= scope.lookupvar('sssd::krb5_server') %>
+krb5_backup_server = <%= scope.lookupvar('sssd::krb5_backup_server') %>
+krb5_realm = <%= scope.lookupvar('sssd::krb5_realm') %>
+krb5_auth_timeout = <%= scope.lookupvar('sssd::krb5_auth_timeout') %>
+<% end -%>
+
 
 [sudo]
 

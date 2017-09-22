@@ -120,6 +120,22 @@ class sssd (
   $manage_nsswitch    = true,
   $logsagent          = undef,
   $debug_level        = '0x02F0',
+  $auth_provider      = 'krb5',
+  $ldap_user_object_class = undef,
+  $ldap_group_object_class = undef,
+  $ldap_default_authtok_type = undef,
+  $krb5_server        = undef,
+  $krb5_backup_server = undef,
+  $krb5_realm         = undef,
+  $krb5_auth_timeout  = undef,
+  $ldap_default_bind_dn = undef,
+  $ldap_default_authtok = undef,
+  $ldap_user_uid_number = undef,
+  $ldap_user_gid_number = undef,
+  $ldap_group_gid_number = undef,
+  $default_shell = undef,
+  $fallback_homedir = undef,
+  $umask = '0077',
 ){
 
   validate_re($provider, ['^ldap$', '^ipa$'], 'Supported providers for SSSD are ldap and ipa')
